@@ -36,7 +36,7 @@ export function DuoCard({ data, onConnect }: Props) {
         />
         <DuoInfo
           label='Disponibilidade'
-          value={`${data.weekdays.length} dias \u2022 ${data.hourStart} - ${data.hourEnd}`}
+          value={`${data.weekdays.length} dia(s) \u2022 ${data.hourStart} - ${data.hourEnd}`}
         />
 
         <DuoInfo

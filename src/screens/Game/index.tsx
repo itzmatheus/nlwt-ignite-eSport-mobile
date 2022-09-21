@@ -13,6 +13,7 @@ import logoImg from '../../assets/logo-nlw-esports.png';
 import { Heading } from '../../components/Heading';
 import { DuoCard, DuoCardProps } from '../../components/DuoCard';
 import { Alien } from 'phosphor-react-native';
+import { DuoMatch } from '../../components/DuoMatch';
 
 export function Game() {
 
@@ -22,6 +23,14 @@ export function Game() {
   const game = route.params as GameParams;
 
   const [duos, setDuos] = useState<DuoCardProps[]>([]);
+  const [discordDuoSelected, setDiscordDuoSelected] = useState('');
+
+  async function getDiscordUser(ads: string) {
+    fetch(`http://192.168.0.106:3333/ads/${ads}/discord`)
+    .then(response => response.json())
+    .then(data => setDiscordDuoSelected(data.discord))
+
+  }
 
   function handleGoBack() {
     navigation.goBack();
@@ -68,7 +77,7 @@ export function Game() {
         renderItem={({item}) => (
           <DuoCard
             data={item}
-            onConnect={() => {}}
+            onConnect={() => getDiscordUser(item.id)}
           />
         )}
         horizontal
@@ -87,7 +96,11 @@ export function Game() {
         )}
       />
 
-
+      <DuoMatch
+        visible={discordDuoSelected.length > 0}
+        discord={discordDuoSelected}
+        onClose={()=> setDiscordDuoSelected('')}
+      />
       </SafeAreaView>
     </Background>
   );
